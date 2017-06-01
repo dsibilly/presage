@@ -27,7 +27,7 @@
         "babel-preset-env": "~1.5.1",
         "chai": "~4.0.0",
         "chai-as-promised": "~6.0.0",
-        "coveralls": "^2.13.1",
+        "coveralls": "~2.13.1",
         "eslint": "~3.15.0",
         "eslint-config-isotropic": "~0.5.0",
         "mocha": "~3.4.2",
