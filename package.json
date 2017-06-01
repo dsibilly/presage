@@ -1,0 +1,69 @@
+{
+    "author": "Duane Sibilly <duane@sibilly.com>",
+    "babel": {
+        "comments": false,
+        "plugins": [
+            "transform-line",
+            "transform-runtime"
+        ],
+        "presets": [
+            "env"
+        ],
+        "sourceMaps": "inline"
+    },
+    "dependencies": {
+        "babel-runtime": "~6.22.0",
+        "isotropic-error": "~0.5.0",
+        "isotropic-logger-global": "~0.5.0",
+        "sinon": "~2.3.2"
+    },
+    "description": "",
+    "devDependencies": {
+        "babel-cli": "~6.22.2",
+        "babel-istanbul": "~0.12.2",
+        "babel-plugin-transform-line": "~0.3.0",
+        "babel-plugin-transform-runtime": "~6.22.0",
+        "babel-preset-babili": "~0.0.10",
+        "babel-preset-env": "~1.5.1",
+        "chai": "~4.0.0",
+        "chai-as-promised": "~6.0.0",
+        "eslint": "~3.15.0",
+        "eslint-config-isotropic": "~0.5.0",
+        "mocha": "~3.4.2",
+        "nsp": "~2.6.3",
+        "pre-commit": "~1.2.2"
+    },
+    "eslintConfig": {
+        "env": {
+            "es6": true,
+            "node": true
+        },
+        "extends": "isotropic",
+        "parserOptions": {
+            "ecmaFeatures": {
+                "experimentalObjectRestSpread": true,
+                "globalReturn": false,
+                "impliedStrict": true,
+                "jsx": false
+            },
+            "ecmaVersion": 2017,
+            "sourceType": "module"
+        },
+        "root": true
+    },
+    "license": "ISC",
+    "main": "lib/index.js",
+    "name": "presage",
+    "scripts": {
+        "build": "BABEL_ENV=build babel js -d lib",
+        "lint": "node_modules/.bin/eslint js",
+        "posttest": "[ -z \"$npm_config_coverage\" ] || babel-istanbul check-coverage --branches 80 --functions 100 --lines 95 --statements 95",
+        "prepare": "npm run build",
+        "prepublishOnly": "npm run securityCheck && npm test --coverage",
+        "pretest": "npm run lint",
+        "securityCheck": "nsp check",
+        "start": "node lib/index.js",
+        "test": "babel-node ./node_modules/.bin/babel-istanbul test _mocha"
+    },
+    "version": "0.1.0"
+}
