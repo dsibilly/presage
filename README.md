@@ -6,12 +6,49 @@ A set of control flow utilities for working with ECMAScript Promises.
 
 ### Collections
 
+* [`filter`](#filter)
 * [`map`](#map)
 * [`mapSeries`](#map-series)
 
 ### Control flow
 
 * [`series`](#series)
+
+<a name="filter"></a>
+
+### filter(coll, iteratee)
+
+Returns a new array of all the values in `coll` which result in a truthy
+value when `iteratee` is applied to them. This operation is performed in
+parallel, but the results array will be in the same order as `coll`.
+
+__Arguments__
+
+* `coll` - A collection to iterate over.
+* `iteratee(item)` - A truth test to apply to each item in `coll`. Expected, but not required, to return a Promise.
+
+__Example__
+
+```javascript
+import fs from 'fs';
+import presage from 'presage';
+
+const pAccess = filePath => new Promise(resolve => {
+    fs.access(filePath, error => {
+        resolve(!error);
+    });
+});
+
+presage.filter([
+    'file1',
+    'file2',
+    'file3'
+], pAccess).then(results => {
+    // results now equals an array of the accessible files
+});
+```
+
+---------------------------------------
 
 <a name="map"></a>
 
