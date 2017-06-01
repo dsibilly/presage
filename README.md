@@ -6,13 +6,14 @@ A set of control flow utilities for working with ECMAScript Promises.
 
 ### Collections
 
-* [`filter`](#filter)
-* [`map`](#map)
-* [`mapSeries`](#map-series)
+* [`eachSeries`](#each-series)
+* [`filter`](#filter), `filterSeries`
+* [`map`](#map), `mapSeries`
 * [`reduce`](#reduce)
 
 ### Control flow
 
+* [`parallel`](#parallel)
 * [`series`](#series)
 
 <a name="filter"></a>
@@ -48,6 +49,10 @@ presage.filter([
     // results now equals an array of the accessible files
 });
 ```
+
+__Related__
+
+* filterSeries(coll, iteratee)
 
 ---------------------------------------
 
@@ -95,33 +100,9 @@ presage.map([
 });
 ```
 
----------------------------------------
+__Related__
 
-<a name="map-series"></a>
-
-### mapSeries(coll, iteratee)
-
-Like `map`, but applies `iteratee` to each item in `coll` in series,
-applying to each item once the previous item has been processed.
-
-__Arguments__
-
-* `coll` - A collection to iterate over.
-* `iteratee(item)` - A function to apply to each item in `coll`.
-
-__Example__
-
-```javascript
-import presage from 'presage';
-
-presage.mapSeries([
-    1,
-    2,
-    3
-], num => Promise.resolve(num * 2)).then(results => {
-    // results is now equal to [2, 4, 6]
-});
-```
+* mapSeries(coll, iteratee)
 
 ---------------------------------------
 
@@ -153,6 +134,67 @@ presage.reduce([
     });
 }), 0).then(result => {
     // result is now equal to the last value of memo, which is 6
+});
+```
+
+---------------------------------------
+
+<a name="parallel"></a>
+
+### parallel(tasks)
+
+Runs the functions in the `tasks` collection in parallel, without
+waiting for the other tasks to finish. If any task throws an Error or
+returns a rejected Promise, this function returns a rejected Promise.
+
+Best used for performing multiple async I/O tasks in parallel. Should
+*not* be used for tasks that do not use timers or perform I/O; the
+single-threaded nature of JavaScript will run these tasks in series and
+not yield any performance gain.
+
+This function accepts an object instead of an array. Each property will
+be run as a function, and the results will be passed to the resolved
+Promise returned by `parallel`.
+
+__Arguments__
+
+* `tasks` - A collection containing functions to run.
+
+__Example__
+
+```javascript
+
+import presage from 'presage';
+
+presage.parallel([
+    () => new Promise(resolve => {
+        setTimeout(() => {
+            resolve('task 1');
+        }, 200);
+    }),
+    () => new Promise(resolve => {
+        setTimeout(() => {
+            resolve('task 2')
+        }, 100);
+    })
+]).then(results => {
+    // the results array with equal [ 'task 1', 'task 2' ]
+    // despite the second task being faster
+});
+
+presage.parallel({
+    one: () => {
+        setTimeout(() => {
+            resolve('task 1')
+        }, 200);
+    },
+    two: () => {
+        setTimeout(() => {
+            resolve('task 2');
+        }, 100);
+    }
+}).then(results => {
+    // results is now equal to { one: 'task 1', two: 'task 2' }
 });
 ```
 

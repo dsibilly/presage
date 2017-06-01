@@ -13,6 +13,7 @@ import presage, {
     filterSeries,
     map,
     mapSeries,
+    parallel,
     reduce,
     series
 } from '../js/index';
@@ -24,6 +25,7 @@ describe('presage', () => {
         expect(presage.filterSeries).to.be.a('function');
         expect(presage.map).to.be.a('function');
         expect(presage.mapSeries).to.be.a('function');
+        expect(presage.parallel).to.be.a('function');
         expect(presage.reduce).to.be.a('function');
         expect(presage.series).to.be.a('function');
 
@@ -32,6 +34,7 @@ describe('presage', () => {
         expect(filterSeries).to.be.a('function');
         expect(map).to.be.a('function');
         expect(mapSeries).to.be.a('function');
+        expect(parallel).to.be.a('function');
         expect(reduce).to.be.a('function');
         expect(series).to.be.a('function');
     });
