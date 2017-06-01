@@ -7,6 +7,7 @@ A set of control flow utilities for working with ECMAScript Promises.
 ### Collections
 
 * [`map`](#map)
+* [`mapSeries`](#map-series)
 
 ### Control flow
 
@@ -52,6 +53,34 @@ presage.map([
     'file3'
 ], pStats).then(results => {
     // results is now an array of stats for each file
+});
+```
+
+---------------------------------------
+
+<a name="map-series"></a>
+
+### mapSeries(coll, iteratee)
+
+Like `map`, but applies `iteratee` to each item in `coll` in series,
+applying to each item once the previous item has been processed.
+
+__Arguments__
+
+* `coll` - A collection to iterate over.
+* `iteratee(item)` - A function to apply to each item in `coll`.
+
+__Example__
+
+```javascript
+import presage from 'presage';
+
+presage.mapSeries([
+    1,
+    2,
+    3
+], num => Promise.resolve(num * 2)).then(results => {
+    // results is now equal to [2, 4, 6]
 });
 ```
 
