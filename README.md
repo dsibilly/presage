@@ -34,6 +34,8 @@ __Arguments__
 __Example__
 
 ```javascript
+import presage from 'presage';
+
 const pStats = file => new Promise((resolve, reject) => {
     fs.stat(file, (error, stats) => {
         if (error) {
@@ -75,6 +77,8 @@ __Arguments__
 __Example__
 
 ```javascript
+import presage from 'presage';
+
 presage.series([
     () => {
         // do some stuff...
