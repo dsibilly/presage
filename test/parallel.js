@@ -35,10 +35,4 @@ describe('parallel', () => {
     }).catch(error => {
         throw error;
     }));
-
-    it('should reject if the argument is neither an array nor object', () => parallel('invalid tasks input').then(() => {
-        throw new Error('should not resolve');
-    }).catch(error => {
-        expect(error).to.be.an.instanceOf(Error).with.property('message', 'invalid argument: tasks list must be an array or object!');
-    }));
 });
