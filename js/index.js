@@ -4,6 +4,7 @@ import filterSeries from './filter-series';
 import map from './map';
 import mapSeries from './map-series';
 import parallel from './parallel';
+import promiseWithCallback from './promise-with-callback';
 import reduce from './reduce';
 import series from './series';
 
@@ -14,6 +15,7 @@ export {
     map,
     mapSeries,
     parallel,
+    promiseWithCallback,
     reduce,
     series
 };
@@ -25,6 +27,7 @@ export default {
     map,
     mapSeries,
     parallel,
+    promiseWithCallback,
     reduce,
     series
 };

@@ -1,20 +1,81 @@
 # presage [![Build Status](https://travis-ci.org/dsibilly/presage.svg?branch=develop)](https://travis-ci.org/dsibilly/presage) [![Coverage Status](https://coveralls.io/repos/github/dsibilly/presage/badge.svg?branch=develop)](https://coveralls.io/github/dsibilly/presage?branch=develop)
 
-A set of control flow utilities for working with ECMAScript Promises.
+A set of utilities for working with ECMAScript Promises.
 
 ## Documentation
 
-### Collections
+### [Collections](#collections)
 
 * [`eachSeries`](#each-series)
 * [`filter`](#filter), `filterSeries`
 * [`map`](#map), `mapSeries`
 * [`reduce`](#reduce)
 
-### Control flow
+### [Control Flow](#control-flow)
 
 * [`parallel`](#parallel)
 * [`series`](#series)
+
+### [Utilities](#utilities)
+
+* [`promiseWithCallback`](#promise-with-callback)
+
+---------------------------------------
+
+<a name="collections"></a>
+
+## Collections
+
+<a name="each-series"></a>
+
+### eachSeries(coll, iteratee)
+
+Applies the function `iteratee` to each item in `coll`, in series.
+`iteratee` is called with an item from the collection, and may return
+a value or a Promise. If `iteratee` throws an Error or returns a
+rejected Promise, `eachSeries` returns a rejected Promise.
+
+This function is best used to yield side-effects. If in-place
+transformation without side-effects are desired, use [`map`](#map) or
+`mapSeries` instead.
+
+__Arguments__
+
+* `coll` - A collection to iterate over.
+* `iteratee(item)` - A function to apply to each item in `coll`. Note that the array index of `item` is *not* passed to `iteratee`.
+
+__Example__
+
+```javascript
+import presage from 'presage';
+
+presage.eachSeries([
+    'file1',
+    'file2',
+    'file3'
+], filePath => new Promise((resolve, reject) => {
+    console.log(`Processing file: ${filePath}`);
+
+    if (file.length > 32) {
+        // File name too long
+        reject(new Error(`File name too long: ${filePath}`));
+        return;
+    }
+
+    console.log(`Processing complete: ${filePath}`);
+    resolve();
+})).catch(error => {
+    // If any of the file processing produced an error, handle it here
+    if (error) {
+        console.error(error);
+        return;
+    }
+
+    console.log('All files have been processed successfully');
+});
+```
+
+---------------------------------------
 
 <a name="filter"></a>
 
@@ -139,6 +200,10 @@ presage.reduce([
 
 ---------------------------------------
 
+<a name="control-flow"></a>
+
+## Control Flow
+
 <a name="parallel"></a>
 
 ### parallel(tasks)
@@ -237,3 +302,66 @@ presage.series([
 ```
 
 ---------------------------------------
+
+<a name="utilities"></a>
+
+## Utilities
+
+<a name="promise-with-callback"></a>
+
+### promiseWithCallback([valueReducer])
+
+Returns an object containing a `promise` and a `callbackFunction`.
+These are connected such that when `callback` is invoked, `promise` is
+resolved or rejected accordingly.
+
+The callback function has the signature:
+`callbackFunction(error[, arg1[, ...[, argN]]])`; it expects the first
+argument to be an Error object or *null*, while subsequent arguments are
+provided to `promise` for resolution.
+
+Takes an optional `valueReducer` function that reduces values passed to
+the callback function to a single value. `promise` is resolved with this
+value. If `valueReducer` throws or rejects, `promise` is rejected.
+
+This function can be useful for wrapping callback-based async functions
+with Promises.
+
+__Arguments__
+
+* `valueReducer` - an optional variadic function that reduces its arguments to a single value.
+
+__Example__
+
+```javascript
+import fs from 'fs';
+import presage from 'presage';
+
+const pReadFile = (path, options) => {
+    const {
+        callbackFunction,
+        promise
+    } = presage.promiseWithCallback();
+
+    fs.readFile(filename, options, callbackFunction);
+    return promise;
+};
+
+pReadFile('./example.txt').then(data => {
+    // the file's data is here if resolved...
+}).catch(error => {
+    // the rejection error is here is rejected
+});
+
+// ...and with a value reducer that adds callback arguments
+const {
+    callbackFunction,
+    promise
+} = promiseWithCallback((...args) => args.reduce((memo, arg) => memo + arg));
+
+callbackFunction(null, 1, 2, 3);
+promise.then(result => {
+    // result is now equal to the sum of the arguments provided to
+    // callbackFunction, which is 6.
+});
+```
