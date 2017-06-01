@@ -1,4 +1,4 @@
-# presage
+# presage [![Build Status](https://travis-ci.org/dsibilly/presage.svg?branch=develop)](https://travis-ci.org/dsibilly/presage)
 
 A set of control flow utilities for working with ECMAScript Promises.
 
