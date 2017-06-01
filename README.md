@@ -72,6 +72,7 @@ __Arguments__
 __Example__
 
 ```javascript
+import fs from 'fs';
 import presage from 'presage';
 
 const pStats = file => new Promise((resolve, reject) => {
