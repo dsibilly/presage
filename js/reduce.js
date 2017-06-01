@@ -14,8 +14,8 @@ export default (coll, reducer, initialValue) => new Promise((resolve, reject) =>
                 total,
                 item.value
             ]).then(value => {
-                i += 1;
                 next(reducer(value[0], value[1], i));
+                i += 1;
             }).catch(reject);
         };
 
