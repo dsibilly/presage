@@ -9,6 +9,7 @@ A set of control flow utilities for working with ECMAScript Promises.
 * [`filter`](#filter)
 * [`map`](#map)
 * [`mapSeries`](#map-series)
+* [`reduce`](#reduce)
 
 ### Control flow
 
@@ -119,6 +120,39 @@ presage.mapSeries([
     3
 ], num => Promise.resolve(num * 2)).then(results => {
     // results is now equal to [2, 4, 6]
+});
+```
+
+---------------------------------------
+
+<a name="reduce"></a>
+
+### reduce(coll, reducer, initialValue)
+
+Reduces `coll` into a single value using async `reducer` to return
+each incremental result. `initialValue` is the initial state of the
+reduction. This function only operates in series.
+
+__Arguments__
+
+* `coll` - A collection to iterate over. This collection may contain values or Promises.
+* `reducer(memo, item)` - A function applied to each item in `coll` to produce the next step in the reduction. `memo` is the current memoization of the reduction, containing the partial result up to the current step. `item` is the current item in `coll` that is being processed. `reducer` may return a value or a Promise.
+
+__Example__
+
+```javascript
+import presage from 'presage';
+
+presage.reduce([
+    Promise.resolve(1),
+    2,
+    Promise.resolve(3)
+], (memo, item) => new Promise(resolve => {
+    process.nextTick(() => {
+        resolve(memo + item);
+    });
+}), 0).then(result => {
+    // result is now equal to the last value of memo, which is 6
 });
 ```
 
