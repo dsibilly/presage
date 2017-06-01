@@ -51,7 +51,7 @@
         },
         "root": true
     },
-    "license": "ISC",
+    "license": "BSD-3-Clause",
     "main": "lib/index.js",
     "name": "presage",
     "scripts": {
