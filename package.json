@@ -27,6 +27,7 @@
         "babel-preset-env": "~1.5.1",
         "chai": "~4.0.0",
         "chai-as-promised": "~6.0.0",
+        "coveralls": "^2.13.1",
         "eslint": "~3.15.0",
         "eslint-config-isotropic": "~0.5.0",
         "mocha": "~3.4.2",
@@ -56,6 +57,7 @@
     "name": "presage",
     "scripts": {
         "build": "BABEL_ENV=build babel js -d lib",
+        "coverage": "babel-node ./node_modules/.bin/babel-istanbul cover _mocha --report lcovonly -- -R spec",
         "lint": "node_modules/.bin/eslint js",
         "posttest": "[ -z \"$npm_config_coverage\" ] || babel-istanbul check-coverage --branches 80 --functions 100 --lines 95 --statements 95",
         "prepare": "npm run build",
