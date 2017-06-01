@@ -12,14 +12,14 @@ import series from '../js/series';
 
 describe('series', () => {
     it('should run each task in series', () => {
-        const [
-                task1,
-                resolve1
-            ] = deferredTaskResolveSpy('value 1'),
-            [
-                task2,
-                resolve2
-            ] = deferredTaskResolveSpy('value 2');
+        const {
+                resolveSpy: resolve1,
+                taskSpy: task1
+            } = deferredTaskResolveSpy('value 1'),
+            {
+                resolveSpy: resolve2,
+                taskSpy: task2
+            } = deferredTaskResolveSpy('value 2');
 
         return series([task1, task2]).then(() => {
             expect(task1.calledBefore(resolve1)).to.equal(true, 'task1 should be called before resolve1');

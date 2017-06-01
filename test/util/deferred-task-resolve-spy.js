@@ -14,5 +14,8 @@ export default resolveValue => {
             return promise;
         });
 
-    return [taskSpy, resolveSpy];
+    return {
+        resolveSpy,
+        taskSpy
+    };
 };
