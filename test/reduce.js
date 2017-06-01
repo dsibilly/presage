@@ -10,8 +10,6 @@ import {
 import reduce from '../js/reduce';
 
 describe('reduce', () => {
-    let array;
-
     it('should reduce the contents of the array to a single value', () => {
         const _array = [
             Promise.resolve(3),
@@ -19,7 +17,9 @@ describe('reduce', () => {
             Promise.resolve(5)
         ];
 
-        return reduce(_array, (memo, item) => memo + item, 0).should.eventually.equal(10);
+        return reduce(_array, (memo, item) => memo + item, 0).then(result => {
+            expect(result).to.equal(10);
+        });
     });
 
     it('should reject if the reducer rejects', () => {
@@ -28,7 +28,9 @@ describe('reduce', () => {
             Promise.reject(new Error('test error'))
         ];
 
-        return reduce(_array, (memo, item) => memo + item, 0).should.be.rejectedWith('test error');
+        return reduce(_array, (memo, item) => memo + item, 0).catch(error => {
+            expect(error).to.be.an.instanceOf(Error).with.property('message', 'test error');
+        });
     });
 
     it('should reject if the reducer throws', () => {
@@ -39,10 +41,14 @@ describe('reduce', () => {
 
         return reduce(_array, () => {
             throw new Error('test error');
-        }).should.be.rejectedWith('test error');
+        }).catch(error => {
+            expect(error).to.be.an.instanceOf(Error).with.property('message', 'test error');
+        });
     });
 
-    it('should handle an empty collection', () => {
-        return reduce([], () => {}, 0).should.eventually.equal(0);
-    });
+    it('should handle an empty collection', () => reduce([], () => {
+        // do nothing
+    }, 0).then(result => {
+        expect(result).to.equal(0);
+    }));
 });

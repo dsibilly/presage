@@ -3,16 +3,11 @@ import {
     it
 } from 'mocha';
 
-import chai, {
-    should as _should
+import {
+    expect
 } from 'chai';
 
-import chaiAsPromised from 'chai-as-promised';
 import filter from '../js/filter';
-
-const should = _should();
-
-chai.use(chaiAsPromised);
 
 describe('filter', () => {
     it('should filter the collection based on the asynchronous response from the iteratee', () => {
@@ -22,10 +17,12 @@ describe('filter', () => {
             'c'
         ];
 
-        return filter(array, value => Promise.resolve(value !== 'b')).should.eventually.eql([
-            'a',
-            'c'
-        ]);
+        return filter(array, value => Promise.resolve(value !== 'b')).then(result => {
+            expect(result).to.eql([
+                'a',
+                'c'
+            ]);
+        });
     });
 
     it('should pass both value and index', () => {
@@ -35,10 +32,12 @@ describe('filter', () => {
             'c'
         ];
 
-        return filter(array, (value, index) => Promise.resolve(index !== 1)).should.eventually.eql([
-            'a',
-            'c'
-        ]);
+        return filter(array, (value, index) => Promise.resolve(index !== 1)).then(result => {
+            expect(result).to.eql([
+                'a',
+                'c'
+            ]);
+        });
     });
 
     it('should reject if the iteratee rejects', () => {
@@ -48,7 +47,9 @@ describe('filter', () => {
             'c'
         ];
 
-        return filter(array, () => Promise.reject(new Error('test error'))).should.be.rejectedWith('test error');
+        return filter(array, () => Promise.reject(new Error('test error'))).catch(error => {
+            expect(error).to.be.an.instanceOf(Error).with.property('message', 'test error');
+        });
     });
 
     it('should reject if the iteratee throws', () => {
@@ -60,6 +61,8 @@ describe('filter', () => {
 
         return filter(array, () => {
             throw new Error('test error');
-        }).should.be.rejectedWith('test error');
+        }).catch(error => {
+            expect(error).to.be.an.instanceOf(Error).with.property('message', 'test error');
+        });
     });
 });

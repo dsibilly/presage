@@ -74,19 +74,15 @@ describe('map', () => {
         30
     ], (num, index) => {
         throw new Error(`test error: ${num}, ${index}`);
-    }).then(() => {
-        throw new Error('should not resolve');
     }).catch(error => {
-        expect(error).to.be.an.instanceOf(Error);
+        expect(error).to.be.an.instanceOf(Error).with.property('message').and.match(/test error/);
     }));
 
     it('should reject if the mapping function rejects', () => map([
         10,
         20,
         30
-    ], (num, index) => Promise.reject(new Error(`test error: ${num}, ${index}`)).then(() => {
-        throw new Error('should not resolve');
-    }).catch(error => {
-        expect(error).to.be.an.instanceOf(Error);
+    ], (num, index) => Promise.reject(new Error(`test error: ${num}, ${index}`)).catch(error => {
+        expect(error).to.be.an.instanceOf(Error).with.property('message').and.match(/test error/);
     })));
 });
