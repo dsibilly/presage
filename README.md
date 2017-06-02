@@ -1,4 +1,4 @@
-# presage [![Build Status](https://travis-ci.org/dsibilly/presage.svg?branch=master)](https://travis-ci.org/dsibilly/presage) [![Coverage Status](https://coveralls.io/repos/github/dsibilly/presage/badge.svg?branch=master)](https://coveralls.io/github/dsibilly/presage)
+# presage [![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause) [![Build Status](https://travis-ci.org/dsibilly/presage.svg?branch=master)](https://travis-ci.org/dsibilly/presage) [![Coverage Status](https://coveralls.io/repos/github/dsibilly/presage/badge.svg?branch=master)](https://coveralls.io/github/dsibilly/presage)
 
 A set of utilities for working with ECMAScript Promises.
 
