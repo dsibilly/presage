@@ -343,7 +343,7 @@ const pReadFile = (path, options) => {
         promise
     } = presage.promiseWithCallback();
 
-    fs.readFile(filename, options, callbackFunction);
+    fs.readFile(path, options, callbackFunction);
     return promise;
 };
 
