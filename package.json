@@ -65,5 +65,5 @@
         "start": "node lib/index.js",
         "test": "babel-node ./node_modules/.bin/babel-istanbul test _mocha"
     },
-    "version": "0.1.0"
+    "version": "0.1.2"
 }
