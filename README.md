@@ -142,15 +142,15 @@ __Example__
 import fs from 'fs';
 import presage from 'presage';
 
-const pStats = file => new Promise((resolve, reject) => {
-    fs.stat(file, (error, stats) => {
-        if (error) {
-            reject(error);
-        } else {
-            resolve(stats);
-        }
-    });
-});
+const pState = file => {
+    const {
+        callbackFunction,
+        promise
+    } = presage.promiseWithCallback();
+
+    fs.stat(file, callbackFunction);
+    return promise;
+}
 
 presage.map([
     'file1',
@@ -343,7 +343,7 @@ const pReadFile = (path, options) => {
         promise
     } = presage.promiseWithCallback();
 
-    fs.readFile(filename, options, callbackFunction);
+    fs.readFile(path, options, callbackFunction);
     return promise;
 };
 
