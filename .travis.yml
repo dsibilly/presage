@@ -1,6 +1,6 @@
 addons:
     code_climate:
-        repo_token: $CODE_CLIMATE_REPO_TOKEN
+        repo_token: $CODECLIMATE_REPO_TOKEN
 language: node_js
 node_js:
     - "6"
