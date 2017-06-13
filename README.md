@@ -1,6 +1,11 @@
-# presage [![npm version](https://badge.fury.io/js/presage.svg)](https://badge.fury.io/js/presage) [![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause) [![Build Status](https://travis-ci.org/dsibilly/presage.svg?branch=master)](https://travis-ci.org/dsibilly/presage) [![Coverage Status](https://coveralls.io/repos/github/dsibilly/presage/badge.svg?branch=master)](https://coveralls.io/github/dsibilly/presage) [![Dependency Status](https://gemnasium.com/badges/github.com/dsibilly/presage.svg)](https://gemnasium.com/github.com/dsibilly/presage) [![Code Climate](https://codeclimate.com/github/dsibilly/presage.svg)](https://codeclimate.com/github/dsibilly/presage)
+# presage
 
 A set of utilities for working with ECMAScript Promises.
+
+[![npm version](https://badge.fury.io/js/presage.svg)](https://badge.fury.io/js/presage) [![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause) [![Build Status](https://travis-ci.org/dsibilly/presage.svg?branch=master)](https://travis-ci.org/dsibilly/presage) [![Coverage Status](https://coveralls.io/repos/github/dsibilly/presage/badge.svg?branch=master)](https://coveralls.io/github/dsibilly/presage) [![Dependency Status](https://gemnasium.com/badges/github.com/dsibilly/presage.svg)](https://gemnasium.com/github.com/dsibilly/presage) [![Code Climate](https://codeclimate.com/github/dsibilly/presage.svg)](https://codeclimate.com/github/dsibilly/presage)
+
+[![NPM](https://nodei.co/npm/presage.png?compact=true)](https://nodei.co/npm/presage/)
+
 
 ## Documentation
 
