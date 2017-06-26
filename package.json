@@ -31,7 +31,7 @@
         "mocha": "~3.4.2",
         "nsp": "~2.6.3",
         "pre-commit": "~1.2.2",
-        "sinon": "~2.3.2"
+        "sinon": "~2.3.5"
     },
     "eslintConfig": {
         "env": {
