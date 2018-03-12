@@ -7,6 +7,7 @@ Promise will reject with that error.
 */
 export default tasks => {
     const serialPromises = [];
+
     let promisePointer = Promise.resolve();
 
     tasks.forEach(task => {
