@@ -75,7 +75,7 @@ describe('map', () => {
     ], (num, index) => {
         throw new Error(`test error: ${num}, ${index}`);
     }).catch(error => {
-        expect(error).to.be.an.instanceOf(Error).with.property('message').and.match(/test error/);
+        expect(error).to.be.an.instanceOf(Error).with.property('message').and.match(/test error/u);
     }));
 
     it('should reject if the mapping function rejects', () => map([
@@ -83,6 +83,6 @@ describe('map', () => {
         20,
         30
     ], (num, index) => Promise.reject(new Error(`test error: ${num}, ${index}`)).catch(error => {
-        expect(error).to.be.an.instanceOf(Error).with.property('message').and.match(/test error/);
+        expect(error).to.be.an.instanceOf(Error).with.property('message').and.match(/test error/u);
     })));
 });

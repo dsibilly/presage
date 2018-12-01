@@ -1,37 +1,41 @@
 {
     "author": "Duane Sibilly <duane@sibilly.com>",
     "babel": {
-        "comments": false,
+        "env": {
+            "test": {
+                "plugins": [
+                    "istanbul"
+                ]
+            }
+        },
         "plugins": [
-            "transform-line",
-            "transform-runtime"
+            "transform-line"
         ],
         "presets": [
-            "env"
-        ],
-        "sourceMaps": "inline"
+            "@babel/preset-env"
+        ]
     },
     "bugs": {
         "url": "https://github.com/dsibilly/presage/issues"
     },
-    "dependencies": {
-        "babel-runtime": "~6.26.0"
-    },
     "description": "A set of utilities for working with ECMAScript Promises.",
     "devDependencies": {
-        "babel-cli": "~6.26.0",
-        "babel-istanbul": "~0.12.2",
-        "babel-plugin-transform-line": "~0.4.0",
-        "babel-plugin-transform-runtime": "~6.23.0",
-        "babel-preset-env": "~1.6.1",
-        "chai": "~4.1.2",
-        "coveralls": "~3.0.0",
-        "eslint": "~4.18.2",
-        "eslint-config-isotropic": "~0.6.0",
-        "mocha": "~5.0.4",
-        "nsp": "~3.2.1",
+        "@babel/cli": "^7.1.5",
+        "@babel/core": "^7.1.6",
+        "@babel/node": "^7.0.0",
+        "@babel/preset-env": "^7.1.6",
+        "@babel/register": "^7.0.0",
+        "babel-plugin-istanbul": "^5.1.0",
+        "babel-plugin-transform-line": "~0.5.0",
+        "chai": "^4.2.0",
+        "coveralls": "~3.0.2",
+        "cross-env": "~5.2.0",
+        "eslint": "~5.9.0",
+        "eslint-plugin-isotropic": "~0.2.0",
+        "mocha": "~5.2.0",
+        "nyc": "~13.1.0",
         "pre-commit": "~1.2.2",
-        "sinon": "~4.4.3"
+        "sinon": "~7.1.1"
     },
     "eslintConfig": {
         "env": {
@@ -39,22 +43,48 @@
             "mocha": true,
             "node": true
         },
-        "extends": "isotropic",
+        "extends": "plugin:isotropic/isotropic",
         "parserOptions": {
             "ecmaFeatures": {
-                "experimentalObjectRestSpread": true,
                 "globalReturn": false,
                 "impliedStrict": true,
                 "jsx": false
             },
-            "ecmaVersion": 2017,
+            "ecmaVersion": 2018,
             "sourceType": "module"
         },
-        "root": true
+        "plugins": [
+            "isotropic"
+        ],
+        "root": true,
+        "rules": {
+            "sort-imports": 0
+        }
     },
     "license": "BSD-3-Clause",
     "main": "lib/index.js",
     "name": "presage",
+    "nyc": {
+        "all": true,
+        "cache": true,
+        "check-coverage": true,
+        "include": [
+            "js/*.js",
+            "js/*/*.js"
+        ],
+        "exclude": [
+            "lib/*"
+        ],
+        "instrument": false,
+        "reporter": [
+            "lcov",
+            "text-summary"
+        ],
+        "require": [
+            "@babel/register"
+        ],
+        "sourceMap": false
+    },
     "repository": {
         "type": "git",
         "url": "https://github.com/dsibilly/presage.git"
@@ -62,15 +92,13 @@
     "scripts": {
         "build": "BABEL_ENV=build babel js -d lib",
         "coverage": "babel-node ./node_modules/.bin/babel-istanbul cover _mocha --report lcovonly -- -R spec",
-        "lint": "node_modules/.bin/eslint js",
-        "posttest": "[ -z \"$npm_config_coverage\" ] || babel-istanbul check-coverage --branches 80 --functions 100 --lines 100 --statements 100",
+        "lint": "node_modules/.bin/eslint js test",
+        "posttest": "[ -z \"$npm_config_coverage\" ] || nyc check-coverage",
         "prepare": "npm run build",
-        "prepublishOnly": "npm run securityCheck && npm test --coverage",
+        "prepublishOnly": "npm test",
         "pretest": "npm run lint",
         "rebuild": "rm -rf ./node_modules && rm package-lock.json && npm install",
-        "securityCheck": "nsp check",
-        "start": "node lib/index.js",
-        "test": "babel-node ./node_modules/.bin/babel-istanbul test _mocha"
+        "test": "cross-env BABEL_ENV=test nyc mocha"
     },
-    "version": "0.1.5"
+    "version": "0.2.0"
 }
