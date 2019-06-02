@@ -28,7 +28,7 @@ describe('series', () => {
         });
     });
 
-    it('should resolve with an array of the resolved return vaules from each task', () => series([
+    it('should resolve with an array of the resolved return values from each task', () => series([
         () => Promise.resolve('value 1'),
         () => Promise.resolve('value 2')
     ]).then(result => {
