@@ -13,8 +13,8 @@ parallelObject({
 });
 ```
 */
-import tryInvoke from './try-invoke';
-import zipObject from './zip-object';
+import _tryInvoke from './try-invoke';
+import _zipObject from './zip-object';
 
 export default inputObject => {
     const keys = Object.keys(inputObject);
@@ -24,12 +24,12 @@ export default inputObject => {
 
         switch (typeof inputObject[key]) {
             case 'function':
-                result = tryInvoke(inputObject[key]);
+                result = _tryInvoke(inputObject[key]);
                 break;
             default:
                 result = inputObject[key];
         }
 
         return result;
-    })).then(values => zipObject(keys, values));
+    })).then(values => _zipObject(keys, values));
 };

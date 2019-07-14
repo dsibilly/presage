@@ -1,3 +1,3 @@
-import reduce from './reduce';
+import _reduce from './reduce';
 
-export default (coll, iteratee) => reduce(coll, (memo, item, index) => iteratee(item, index)).then(() => coll);
+export default (coll, iteratee) => _reduce(coll, (memo, item, index) => iteratee(item, index)).then(() => coll);
