@@ -1,4 +1,4 @@
-import map from './map';
-import mapFilter from './map-filter';
+import _map from './map';
+import _mapFilter from './map-filter';
 
-export default (coll, iteratee) => mapFilter(map, coll, iteratee);
+export default (coll, iteratee) => _mapFilter(_map, coll, iteratee);

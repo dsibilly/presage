@@ -1,10 +1,10 @@
-import parallelArray from './parallel-array';
-import parallelObject from './parallel-object';
+import _parallelArray from './parallel-array';
+import _parallelObject from './parallel-object';
 
 export default tasks => {
     if (Array.isArray(tasks)) {
-        return parallelArray(tasks);
+        return _parallelArray(tasks);
     }
 
-    return parallelObject(tasks);
+    return _parallelObject(tasks);
 };

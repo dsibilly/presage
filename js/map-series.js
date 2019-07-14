@@ -1,3 +1,3 @@
-import series from './series';
+import _series from './series';
 
-export default (coll, iteratee) => series(coll.map((value, index) => () => iteratee(value, index)));
+export default (coll, iteratee) => _series(coll.map((value, index) => () => iteratee(value, index)));

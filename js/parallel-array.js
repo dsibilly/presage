@@ -9,6 +9,6 @@ task itself.
 If any task returns a rejected Promise or throws an error, the resulting
 Promise will reject with that error.
 */
-import tryInvoke from './try-invoke';
+import _tryInvoke from './try-invoke';
 
-export default tasks => Promise.all(tasks.map(tryInvoke));
+export default tasks => Promise.all(tasks.map(_tryInvoke));
